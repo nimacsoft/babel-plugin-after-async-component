@@ -1,6 +1,6 @@
-# babel-plugin-after-asyncComponent
+# babel-plugin-after-async-component
 
-Babel plugin to make Afterjs Code Splitting (asyncComponent) easier.
+Babel plugin to add additional chunk info to asyncComponent() in Afterjs.
 
 ## Example
 
@@ -37,13 +37,13 @@ Babel plugin to make Afterjs Code Splitting (asyncComponent) easier.
 ## Installation
 
 ```sh
-$ npm install babel-plugin-after-asyncComponent --save-dev
+$ npm install babel-plugin-after-async-component --save-dev
 ```
 
 or if you use Yarn like me:
 
 ```sh
-$ yarn add -D babel-plugin-after-asyncComponent
+$ yarn add -D babel-plugin-after-async-component
 ```
 
 ## Usage
@@ -54,30 +54,30 @@ $ yarn add -D babel-plugin-after-asyncComponent
 
 ```json
 {
-  "plugins": ["after-asyncComponent"]
+  "plugins": ["after-async-component"]
 }
 ```
 
 #### Options
 
-- _`prefix`_ - String used to append before chunkname and webpackChunkName. default: `AfterChunk-`
+- _`prefix`_: string (defaults: AfterChunk-)  String used to append before chunkname and webpackChunkName.
 
 ```json
 {
-  "plugins": ["after-asyncComponent", { "prefix": "AfterChunk-" }]
+  "plugins": ["after-async-component", { "prefix": "AfterChunk-" }]
 }
 ```
 
 ### Via CLI
 
 ```sh
-$ babel --plugins after-asyncComponent script.js
+$ babel --plugins after-async-component script.js
 ```
 
 ### Via Node API
 
 ```javascript
 require("babel-core").transform("code", {
-  plugins: ["after-asyncComponent"]
+  plugins: ["after-async-component"]
 });
 ```

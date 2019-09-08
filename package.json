@@ -1,15 +1,28 @@
 {
-  "name": "babel-plugin",
+  "name": "babel-plugin-after-async-component",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Babel plugin to add additional chunk info to asyncComponent() in Afterjs",
+  "main": "lib/index.js",
   "scripts": {
     "clean": "rm -rf lib",
     "build": "babel src -d lib",
     "example": "npm run build && babel example/input.js -o example/output.js"
   },
-  "author": "Nima Arefi <nimaarefi@outlook.com> (https://twitter.com/nima_arf)",
-  "license": "MIT",
+	"repository": {
+		"type": "git",
+    "url": "git+https://github.com/nimacsoft/babel-plugin-after-async-component.git"
+  },
+  "keywords": [
+		"babel",
+    "plugin",
+    "afterjs"
+  ],
+	"author": "Nima Arefi <nimaarefi@outlook.com> (https://twitter.com/nima_arf)",
+	"license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nimacsoft/babel-plugin-after-async-component/issues"
+  },
+	"homepage": "https://github.com/nimacsoft/babel-plugin-after-async-component#readme",
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",

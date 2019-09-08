@@ -14,7 +14,7 @@ const validImportSources = [
 
 export default function({ types: t }) {
   return {
-    name: "after-asyncComponent",
+    name: "after-async-component",
     visitor: {
       ImportDeclaration(path) {
         if (
