@@ -47,7 +47,7 @@ export function getMagicCommentChunkName(importArgNode) {
   const chunkName = hasExpressions
     ? "[request]"
     : trimChunkNameBaseDir(baseDir);
-  return chunkName
+  return chunkName;
 }
 
 export function getMagicWebpackComments(importArgNode) {
@@ -72,11 +72,11 @@ export function getMagicWebpackComments(importArgNode) {
 }
 
 export function addChunkNameToNode(argPath, chunkName) {
-	const otherValidMagicComments = getMagicWebpackComments(argPath.node);
-	
-	delete argPath.node.leadingComments;
-	argPath.addComment("leading", ` webpackChunkName: '${chunkName}' `);
-	otherValidMagicComments.forEach(validLeadingComment =>
-		argPath.addComment("leading", validLeadingComment.value)
-	);
+  const otherValidMagicComments = getMagicWebpackComments(argPath.node);
+
+  delete argPath.node.leadingComments;
+  argPath.addComment("leading", ` webpackChunkName: '${chunkName}' `);
+  otherValidMagicComments.forEach(validLeadingComment =>
+    argPath.addComment("leading", validLeadingComment.value)
+  );
 }
