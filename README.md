@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/babel-plugin-after-async-component.svg)](https://badge.fury.io/js/babel-plugin-after-async-component)
+
 # babel-plugin-after-async-component
 
 Babel plugin to add additional chunk info to asyncComponent() in Afterjs.
