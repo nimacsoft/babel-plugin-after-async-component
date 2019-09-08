@@ -1,40 +1,47 @@
-Read babel plugin handbook -> https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/plugin-handbook.md
+# babel-plugin-after-asyncComponent
 
-Try http://astexplorer.net/#/Pcw9baefXI for a visual understanding.
-
-# babel-plugin-boilerplate
-
-Add a description for the plugin here
+Babel plugin to make Afterjs Code Splitting (asyncComponent) easier.
 
 ## Example
 
 **In**
 
 ```js
-let tips = [
-  "Paste or drop some JavaScript here and explore the syntax tree created by chosen parser.",
-  "You can use all the cool new features from ES6 and even more. Enjoy!"
-];
-
-function printTips() {
-  tips.forEach((tip, i) => console.log(`Tip ${i}:` + tip));
+{
+  path: "/product/:name",
+  component: asyncComponent({
+    loader: () =>
+      import(
+        `./pages/ProducDetail`
+      )
+  })
 }
 ```
 
 **Out**
 
 ```js
-let spit = ["Paste or drop some JavaScript here and explore the syntax tree created by chosen parser.", "You can use all the cool new features from ES6 and even more. Enjoy!"];
-
-function spiTtnirp() {
-  spit.hcaErof((pit, i) => elosnoc.gol(`Tip ${ i }:` + pit));
+{
+  path: "/product/:name",
+  chunkName: "AfterChunk-pages-ProducDetail",
+  component: asyncComponent({
+    loader: () =>
+      import(
+        /* webpackChunkName: 'AfterChunk-pages-ProducDetail' */
+        `./pages/ProducDetail`
+      )
+  })
 }
 ```
 
 ## Installation
 
 ```sh
-$ npm install babel-plugin-boilerplate
+$ npm install babel-plugin-after-asyncComponent --save-dev
+```
+or if you use Yarn like me:
+```sh
+$ yarn add -D babel-plugin-after-asyncComponent
 ```
 
 ## Usage
@@ -45,20 +52,30 @@ $ npm install babel-plugin-boilerplate
 
 ```json
 {
-  "plugins": ["boilerplate"]
+  "plugins": ["after-asyncComponent"]
+}
+```
+
+#### Options
+
+- *`prefix`* - String used to add before chunkname default: `AfterChunk-`
+
+```json
+{
+  "plugins": ["after-asyncComponent", { "prefix": "AfterChunk-" }]
 }
 ```
 
 ### Via CLI
 
 ```sh
-$ babel --plugins boilerplate script.js
+$ babel --plugins after-asyncComponent script.js
 ```
 
 ### Via Node API
 
 ```javascript
 require("babel-core").transform("code", {
-  plugins: ["boilerplate"]
+  plugins: ["after-asyncComponent"]
 });
 ```
