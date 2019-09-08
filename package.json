@@ -1,0 +1,19 @@
+{
+  "name": "babel-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "babel src -d lib",
+    "example": "npm run build && babel example/input.js -o example/output.js"
+  },
+  "author": "Nima Arefi <nimaarefi@outlook.com> (https://twitter.com/nima_arf)",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.6.0"
+  }
+}
