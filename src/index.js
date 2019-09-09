@@ -1,20 +1,20 @@
-const {
+import {
   existingMagicCommentChunkName,
   getMagicCommentChunkName,
   getImportArgPath,
-  addChunkNameToNode
-} = require("./helpers");
+  addChunkNameToNode,
+} from './helpers';
 
 let asyncComponentImportNames = [];
 
 const validImportSources = [
-  "@jaredpalmer/after",
-  "jaredpalmer/after/asyncComponent"
+  '@jaredpalmer/after',
+  'jaredpalmer/after/asyncComponent',
 ];
 
 export default function({ types: t }) {
   return {
-    name: "after-async-component",
+    name: 'after-async-component',
     visitor: {
       ImportDeclaration(path) {
         if (
@@ -26,7 +26,7 @@ export default function({ types: t }) {
             specifier =>
               t.isImportDefaultSpecifier(specifier) ||
               (t.isImportSpecifier(specifier) &&
-                specifier.imported.name === "asyncComponent")
+                specifier.imported.name === 'asyncComponent')
           );
           asyncComponentImport.forEach(asyncComponentImport => {
             asyncComponentImportNames.push(asyncComponentImport.local.name);
@@ -42,16 +42,16 @@ export default function({ types: t }) {
             // check if function is property of an object
             t.isObjectProperty(path.parentPath) &&
             // check if key of property is "component"
-            t.isIdentifier(path.parentPath.node.key, { name: "component" }))
+            t.isIdentifier(path.parentPath.node.key, { name: 'component' }))
         ) {
           path.traverse(importVisitor, {
             parentPath: path.parentPath,
             prefix: opts.prefix,
-            t
+            t,
           });
         }
-      }
-    }
+      },
+    },
   };
 }
 
@@ -60,7 +60,7 @@ const importVisitor = {
     const argPath = getImportArgPath(path);
     const { node } = argPath;
     const generatedChunkName = getMagicCommentChunkName(node);
-    if (generatedChunkName === "[request]") {
+    if (generatedChunkName === '[request]') {
       return;
     }
 
@@ -72,13 +72,13 @@ const importVisitor = {
 
     this.parentPath.insertBefore(
       this.t.objectProperty(
-        this.t.stringLiteral("chunkName"),
+        this.t.stringLiteral('chunkName'),
         this.t.stringLiteral(chunkName)
       )
     );
-  }
+  },
 };
 
-function convertChunkName(chunkName, prefix = "AfterChunk-") {
-  return prefix + chunkName.replace("/", "-");
+function convertChunkName(chunkName, prefix = '') {
+  return prefix + chunkName.replace('/', '-');
 }
