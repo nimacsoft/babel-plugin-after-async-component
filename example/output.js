@@ -1,7 +1,6 @@
-import { asyncComponent } from "@jaredpalmer/after";
-import { asyncComponent as asyncLoad } from "@jaredpalmer/after";
-import loader from "@jaredpalmer/after/asyncComponent";
-
+import { asyncComponent } from "@jaredpalmer/after"
+import { asyncComponent as asyncLoad } from "@jaredpalmer/after"
+import loader from "@jaredpalmer/after/asyncComponent"
 const a = [
   {
     path: "/",
@@ -11,49 +10,47 @@ const a = [
         import(
           /* webpackChunkName: "nima" */
           `./pages/Home`
-        )
-    })
+        ),
+    }),
   },
   {
     path: "/product/:name",
-    chunkName: "AfterChunk-pages-ProducDetail",
+    chunkName: "pages-ProducDetail",
     component: asyncComponent({
       loader: () =>
         import(
-          /* webpackChunkName: 'AfterChunk-pages-ProducDetail' */
+          /* webpackChunkName: 'pages-ProducDetail' */
           `./pages/ProducDetail`
-        )
-    })
+        ),
+    }),
   },
   {
     component: asyncComponent({
-      loader: () => import(`./pages/${asd}`)
-    })
-  }
-];
-
+      loader: () => import(`./pages/${asd}`),
+    }),
+  },
+]
 const b = {
   path: "/",
   exact: true,
-  chunkName: "AfterChunk-pages-Home",
+  chunkName: "pages-Home",
   component: asyncLoad({
     loader: () =>
       import(
-        /* webpackChunkName: 'AfterChunk-pages-Home' */
+        /* webpackChunkName: 'pages-Home' */
         `./pages/Home`
-      )
-  })
-};
-
+      ),
+  }),
+}
 const c = {
   path: "/",
   exact: true,
-  chunkName: "AfterChunk-Home",
+  chunkName: "Home",
   component: asyncComponent({
     loader: () =>
       import(
-        /* webpackChunkName: 'AfterChunk-Home' */
+        /* webpackChunkName: 'Home' */
         `./Home`
-      )
-  })
-};
+      ),
+  }),
+}

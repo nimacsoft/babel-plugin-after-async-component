@@ -3,34 +3,34 @@ import {
   getMagicCommentChunkName,
   getImportArgPath,
   addChunkNameToNode,
-} from './helpers';
+} from "./helpers"
 
-let asyncComponentImportNames = [];
+let asyncComponentImportNames = []
 
 const validImportSources = [
-  '@jaredpalmer/after',
-  'jaredpalmer/after/asyncComponent',
-];
+  "@jaredpalmer/after",
+  "jaredpalmer/after/asyncComponent",
+]
 
 export default function({ types: t }) {
   return {
-    name: 'after-async-component',
+    name: "after-async-component",
     visitor: {
       ImportDeclaration(path) {
         if (
           t.isStringLiteral(path.node.source) &&
           validImportSources.includes(path.node.source.value)
         ) {
-          const { specifiers } = path.node;
+          const { specifiers } = path.node
           const asyncComponentImport = specifiers.filter(
-            specifier =>
+            (specifier) =>
               t.isImportDefaultSpecifier(specifier) ||
               (t.isImportSpecifier(specifier) &&
-                specifier.imported.name === 'asyncComponent')
-          );
-          asyncComponentImport.forEach(asyncComponentImport => {
-            asyncComponentImportNames.push(asyncComponentImport.local.name);
-          });
+                specifier.imported.name === "asyncComponent")
+          )
+          asyncComponentImport.forEach((asyncComponentImport) => {
+            asyncComponentImportNames.push(asyncComponentImport.local.name)
+          })
         }
       },
       CallExpression(path, { opts }) {
@@ -42,43 +42,43 @@ export default function({ types: t }) {
             // check if function is property of an object
             t.isObjectProperty(path.parentPath) &&
             // check if key of property is "component"
-            t.isIdentifier(path.parentPath.node.key, { name: 'component' }))
+            t.isIdentifier(path.parentPath.node.key, { name: "component" }))
         ) {
           path.traverse(importVisitor, {
             parentPath: path.parentPath,
             prefix: opts.prefix,
             t,
-          });
+          })
         }
       },
     },
-  };
+  }
 }
 
 const importVisitor = {
   Import(path) {
-    const argPath = getImportArgPath(path);
-    const { node } = argPath;
-    const generatedChunkName = getMagicCommentChunkName(node);
-    if (generatedChunkName === '[request]') {
-      return;
+    const argPath = getImportArgPath(path)
+    const { node } = argPath
+    const generatedChunkName = getMagicCommentChunkName(node)
+    if (generatedChunkName === "[request]") {
+      return
     }
 
-    const existingChunkName = existingMagicCommentChunkName(node);
+    const existingChunkName = existingMagicCommentChunkName(node)
     const chunkName =
-      existingChunkName || convertChunkName(generatedChunkName, this.prefix);
+      existingChunkName || convertChunkName(generatedChunkName, this.prefix)
 
-    addChunkNameToNode(argPath, chunkName);
+    addChunkNameToNode(argPath, chunkName)
 
     this.parentPath.insertBefore(
       this.t.objectProperty(
-        this.t.stringLiteral('chunkName'),
+        this.t.stringLiteral("chunkName"),
         this.t.stringLiteral(chunkName)
       )
-    );
+    )
   },
-};
+}
 
-function convertChunkName(chunkName, prefix = '') {
-  return prefix + chunkName.replace('/', '-');
+function convertChunkName(chunkName, prefix = "") {
+  return prefix + chunkName.replace("/", "-")
 }

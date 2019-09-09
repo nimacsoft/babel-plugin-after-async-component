@@ -25,11 +25,11 @@ Babel plugin to add additional chunk info to asyncComponent() in Afterjs.
 ```js
 {
   path: "/product/:name",
-  chunkName: "AfterChunk-pages-ProducDetail",
+  chunkName: "pages-ProducDetail",
   component: asyncComponent({
     loader: () =>
       import(
-        /* webpackChunkName: 'AfterChunk-pages-ProducDetail' */
+        /* webpackChunkName: 'pages-ProducDetail' */
         `./pages/ProducDetail`
       )
   })
@@ -62,11 +62,11 @@ $ yarn add -D babel-plugin-after-async-component
 
 #### Options
 
-- _`prefix`_: string (defaults: AfterChunk-)  String used to append before chunkname and webpackChunkName.
+- _`prefix`_: string (defaults: "") String used to append before chunkname and webpackChunkName.
 
 ```json
 {
-  "plugins": ["after-async-component", { "prefix": "AfterChunk-" }]
+  "plugins": ["after-async-component", { "prefix": "MyPrefix-" }]
 }
 ```
 
@@ -80,6 +80,6 @@ $ babel --plugins after-async-component script.js
 
 ```javascript
 require("babel-core").transform("code", {
-  plugins: ["after-async-component"]
-});
+  plugins: ["after-async-component"],
+})
 ```

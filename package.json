@@ -1,32 +1,47 @@
 {
   "name": "babel-plugin-after-async-component",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Babel plugin to add additional chunk info to asyncComponent() in Afterjs",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rm -rf lib",
     "build": "babel src -d lib",
-    "example": "npm run build && babel example/input.js -o example/output.js"
+    "example": "npm run build && babel example/input.js -o example/output.js",
+    "prepublishOnly": "npm run clean && npm run build"
   },
-	"repository": {
-		"type": "git",
+  "repository": {
+    "type": "git",
     "url": "git+https://github.com/nimacsoft/babel-plugin-after-async-component.git"
   },
   "keywords": [
-		"babel",
+    "babel",
     "plugin",
     "afterjs"
   ],
-	"author": "Nima Arefi <nimaarefi@outlook.com> (https://twitter.com/nima_arf)",
-	"license": "MIT",
+  "author": "Nima Arefi <nimaarefi@outlook.com> (https://twitter.com/nima_arf)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nimacsoft/babel-plugin-after-async-component/issues"
   },
-	"homepage": "https://github.com/nimacsoft/babel-plugin-after-async-component#readme",
+  "homepage": "https://github.com/nimacsoft/babel-plugin-after-async-component#readme",
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.6.0"
+    "@babel/preset-env": "^7.6.0",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "prettier": "^1.18.2"
+  },
+  "lint-staged": {
+    "./**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
