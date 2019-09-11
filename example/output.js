@@ -27,11 +27,7 @@ const a = [
   },
   {
     component: asyncComponent({
-      loader: () =>
-        import(
-          /* webpackChunkName: "[request]" */
-          `./pages/${name}`
-        ),
+      loader: () => import(`./pages/${name}`),
     }),
   },
 ]
