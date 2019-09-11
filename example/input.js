@@ -2,6 +2,8 @@ import { asyncComponent } from "@jaredpalmer/after"
 import { asyncComponent as asyncLoad } from "@jaredpalmer/after"
 import loader from "@jaredpalmer/after/asyncComponent"
 
+const name = "random-name"
+
 const a = [
   {
     path: "/",
@@ -18,7 +20,7 @@ const a = [
   },
   {
     component: asyncComponent({
-      loader: () => import(`./pages/${asd}`),
+      loader: () => import(`./pages/${name}`),
     }),
   },
 ]
