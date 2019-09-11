@@ -1,3 +1,4 @@
+import syntaxDynamicImport from "@babel/plugin-syntax-dynamic-import"
 import {
   existingMagicCommentChunkName,
   getMagicCommentChunkName,
@@ -15,6 +16,7 @@ const validImportSources = [
 export default function({ types: t }) {
   return {
     name: "after-async-component",
+    inherits: syntaxDynamicImport,
     visitor: {
       ImportDeclaration(path) {
         if (
