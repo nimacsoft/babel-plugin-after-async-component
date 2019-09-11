@@ -6,8 +6,8 @@ Babel plugin to add additional chunk info to asyncComponent() in Afterjs.
 
 ## How It's Wokring
 
-1. searchs for import statments from these paths `'@jaredpalmer/after'` and `'@jaredpalmer/after/asyncComponent'`
-2. then it finds local name for `asyncComponent` import statment
+1. search for import statements from these paths `'@jaredpalmer/after'` and `'@jaredpalmer/after/asyncComponent'`
+2. then it finds a local name for `asyncComponent` import statement
 
 ```javascript
 // e1.js
@@ -35,7 +35,7 @@ import { asyncComponent, After } from "@jaredpalmer/after" // localname is async
 // localname = [`loader`, `asyncComponent`] :)
 ```
 
-2. then it searchs for FunctionCalls that have these conditions: 
+2. then it searches for FunctionCalls that have these conditions: 
   1) name of function that get called matches localname array 
   2) that function act as value of property 
   3) the name of property must be `component`
@@ -100,7 +100,7 @@ import { asyncComponent } from '@jaredpalmer/after'; // localname is asyncCompon
 }
 
 // 👆 as you can see `./pages/ProducDetail` changed to `pages-ProducDetail`,
-// because for webservers `/` means a folder
+// because for web servers `/` means a folder
 // and webpackChunkName is name of file that saved on disk,
 // so `/` in file name may break our app
 ```
@@ -167,7 +167,7 @@ const name = "SlimShady"
 ```
 
 👆 did you notice that it's not working with the above example ?
-in this kind on situation you have to name that chunk your self
+in this kind of situation you have to name that chunk your self
 
 ### HOW ?
 
@@ -231,7 +231,7 @@ $ yarn add -D babel-plugin-after-async-component
 
 #### Options
 
-- _`prefix`_: string (defaults: "") String used to append before chunkname and webpackChunkName.
+- _`prefix`_: string (defaults: "") String used to append before `chunkName` and `webpackChunkName`.
 
 ```json
 {
