@@ -35,7 +35,10 @@ import { asyncComponent, After } from "@jaredpalmer/after" // localname is async
 // localname = [`loader`, `asyncComponent`] :)
 ```
 
-2. then it searchs for FunctionCalls that have these conditions: 1) name of function that get called matches localname array 2) that function act as value of property 3) the name of property must be `component`
+2. then it searchs for FunctionCalls that have these conditions: 
+  1) name of function that get called matches localname array 
+  2) that function act as value of property 
+  3) the name of property must be `component`
 
 ```javascript
 import { asyncComponent } from '@jaredpalmer/after'; // localname is asyncComponent
