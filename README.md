@@ -10,25 +10,25 @@ Babel plugin to add additional chunk info to asyncComponent() in Afterjs.
 2. then it finds a local name for `asyncComponent` import statement
 
 ```javascript
-// e1.js
+// example1.js
 import { asyncComponent } from "@jaredpalmer/after" // localname is asyncComponent
 
-// e2.js
+// example2.js
 import { asyncComponent as foo } from "@jaredpalmer/after" // localname is foo
 
-// e3.js
+// example3.js
 import asyncComponent from "@jaredpalmer/after/asyncComponent" // localname is asyncComponent
 
-// e4.js
+// example4.js
 import foo from "@jaredpalmer/after/asyncComponent" // localname is foo
 
-// e5.js
+// example5.js
 import { asyncComponent as foo, After } from "@jaredpalmer/after" // localname is foo
 
-// e6.js
+// example6.js
 import { After } from "@jaredpalmer/after" // there is no `asyncComponent` import so babel plugin skips this file
 
-// e7.js
+// example7.js
 import loader from "@jaredpalmer/after/asyncComponent" // localname is loader
 import { asyncComponent, After } from "@jaredpalmer/after" // localname is asyncComponent
 
