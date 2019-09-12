@@ -10,7 +10,7 @@ let asyncComponentImportNames = []
 
 const validImportSources = [
   "@jaredpalmer/after",
-  "jaredpalmer/after/asyncComponent",
+  "@jaredpalmer/after/asyncComponent",
 ]
 
 export default function({ types: t }) {
