@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-after-async-component",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Babel plugin to add additional chunk info to asyncComponent() in Afterjs",
   "main": "lib/index.js",
   "scripts": {
