@@ -1,73 +1,53 @@
 import { asyncComponent } from "@jaredpalmer/after"
-import { asyncComponent as asyncLoad } from "@jaredpalmer/after"
-import loader from "@jaredpalmer/after/asyncComponent"
-const name = "random-name"
-const a = [
+const routes = [
+  {
+    path: "/foo",
+    component: foo,
+  },
   {
     path: "/",
     exact: true,
-    component: loader(
-      {
-        loader: () =>
-          import(
-            /* webpackChunkName: 'mmd' */
-            `./pages/Home`
-          ),
-      },
-      "mmd"
-    ),
-  },
-  {
-    path: "/product/:name",
-    component: asyncComponent(
-      {
-        loader: () =>
-          import(
-            /* webpackChunkName: 'pages-ProducDetail' */
-            `./pages/ProducDetail`
-          ),
-      },
-      "pages-ProducDetail"
-    ),
-  },
-  {
-    component: asyncComponent(
-      {
-        loader: () =>
-          import(
-            /* webpackChunkName: '[request]' */
-            `./pages/${FILE}`
-          ),
-      },
-      FILE
-    ),
-  },
-]
-const b = {
-  path: "/",
-  exact: true,
-  component: asyncLoad(
-    {
+    component: asyncComponent({
       loader: () =>
         import(
-          /* webpackChunkName: 'pages-Home' */
+          /* webpackChunkName: 'asd' */
           `./pages/Home`
         ),
-    },
-    "pages-Home"
-  ),
-}
-const c = {
-  path: "/",
-  exact: true,
-  component: asyncComponent(
-    {
+      chunkName: "asd",
+    }),
+  },
+  {
+    path: "/shop",
+    exact: true,
+    component: asyncComponent({
       loader: () =>
         import(
-          /* webpackChunkName: 'Bisar' */
-          `./Home`
+          /* webpackChunkName: '[request]' */
+          `./pages/${Shop}`
         ),
-    },
-    "Bisar"
-  ),
-}
+      chunkName: Shop,
+    }),
+  },
+  {
+    path: "/blog",
+    exact: true,
+    component: asyncComponent({
+      loader: () =>
+        import(
+          /* webpackChunkName: 'Blog' */
+          `./pages/Blog`
+        ),
+      chunkName: "Blog",
+    }),
+  },
+  {
+    component: asyncComponent({
+      loader: () =>
+        import(
+          /* webpackChunkName: 'NotfoundPage' */
+          `./pages/Notfound`
+        ),
+      chunkName: "NotfoundPage",
+    }),
+  },
+]

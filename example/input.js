@@ -1,48 +1,37 @@
 import { asyncComponent } from "@jaredpalmer/after"
-import { asyncComponent as asyncLoad } from "@jaredpalmer/after"
-import loader from "@jaredpalmer/after/asyncComponent"
 
-const name = "random-name"
-
-const a = [
+const routes = [
+  {
+    path: "/foo",
+    component: foo,
+  },
   {
     path: "/",
     exact: true,
-    component: loader(
-      {
-        loader: () => import(/* webpackChunkName: "nima" */ `./pages/Home`),
-      },
-      "mmd"
-    ),
+    component: asyncComponent({
+      loader: () => import(`./pages/Home`),
+      chunkName: "asd",
+    }),
   },
   {
-    path: "/product/:name",
+    path: "/shop",
+    exact: true,
     component: asyncComponent({
-      loader: () => import(`./pages/ProducDetail`),
+      loader: () => import(`./pages/${Shop}`),
+    }),
+  },
+  {
+    path: "/blog",
+    exact: true,
+    component: asyncComponent({
+      loader: () => import(/* webpackChunkName: "SOMETHING" */ `./pages/Blog`),
+      chunkName: "Blog",
     }),
   },
   {
     component: asyncComponent({
-      loader: () => import(`./pages/${FILE}`),
+      loader: () =>
+        import(/* webpackChunkName: "NotfoundPage" */ `./pages/Notfound`),
     }),
   },
 ]
-
-const b = {
-  path: "/",
-  exact: true,
-  component: asyncLoad({
-    loader: () => import(`./pages/Home`),
-  }),
-}
-
-const c = {
-  path: "/",
-  exact: true,
-  component: asyncComponent(
-    {
-      loader: () => import(`./Home`),
-    },
-    "Bisar"
-  ),
-}
