@@ -8,9 +8,12 @@ const a = [
   {
     path: "/",
     exact: true,
-    component: loader({
-      loader: () => import(/* webpackChunkName: "nima" */ `./pages/Home`),
-    }),
+    component: loader(
+      {
+        loader: () => import(/* webpackChunkName: "nima" */ `./pages/Home`),
+      },
+      "mmd"
+    ),
   },
   {
     path: "/product/:name",
@@ -20,7 +23,7 @@ const a = [
   },
   {
     component: asyncComponent({
-      loader: () => import(`./pages/${name}`),
+      loader: () => import(`./pages/${FILE}`),
     }),
   },
 ]
@@ -36,7 +39,10 @@ const b = {
 const c = {
   path: "/",
   exact: true,
-  component: asyncComponent({
-    loader: () => import(`./Home`),
-  }),
+  component: asyncComponent(
+    {
+      loader: () => import(`./Home`),
+    },
+    "Bisar"
+  ),
 }

@@ -6,52 +6,68 @@ const a = [
   {
     path: "/",
     exact: true,
-    component: loader({
-      loader: () =>
-        import(
-          /* webpackChunkName: "nima" */
-          `./pages/Home`
-        ),
-    }),
+    component: loader(
+      {
+        loader: () =>
+          import(
+            /* webpackChunkName: 'mmd' */
+            `./pages/Home`
+          ),
+      },
+      "mmd"
+    ),
   },
   {
     path: "/product/:name",
-    chunkName: "pages-ProducDetail",
-    component: asyncComponent({
-      loader: () =>
-        import(
-          /* webpackChunkName: 'pages-ProducDetail' */
-          `./pages/ProducDetail`
-        ),
-    }),
+    component: asyncComponent(
+      {
+        loader: () =>
+          import(
+            /* webpackChunkName: 'pages-ProducDetail' */
+            `./pages/ProducDetail`
+          ),
+      },
+      "pages-ProducDetail"
+    ),
   },
   {
-    component: asyncComponent({
-      loader: () => import(`./pages/${name}`),
-    }),
+    component: asyncComponent(
+      {
+        loader: () =>
+          import(
+            /* webpackChunkName: '[request]' */
+            `./pages/${FILE}`
+          ),
+      },
+      FILE
+    ),
   },
 ]
 const b = {
   path: "/",
   exact: true,
-  chunkName: "pages-Home",
-  component: asyncLoad({
-    loader: () =>
-      import(
-        /* webpackChunkName: 'pages-Home' */
-        `./pages/Home`
-      ),
-  }),
+  component: asyncLoad(
+    {
+      loader: () =>
+        import(
+          /* webpackChunkName: 'pages-Home' */
+          `./pages/Home`
+        ),
+    },
+    "pages-Home"
+  ),
 }
 const c = {
   path: "/",
   exact: true,
-  chunkName: "Home",
-  component: asyncComponent({
-    loader: () =>
-      import(
-        /* webpackChunkName: 'Home' */
-        `./Home`
-      ),
-  }),
+  component: asyncComponent(
+    {
+      loader: () =>
+        import(
+          /* webpackChunkName: 'Bisar' */
+          `./Home`
+        ),
+    },
+    "Bisar"
+  ),
 }
