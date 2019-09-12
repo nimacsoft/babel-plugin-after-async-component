@@ -130,8 +130,9 @@ import { asyncComponent } from '@jaredpalmer/after'; // localname is asyncCompon
       import(
         /* webpackChunkName: 'HelloWorld' */
         `./pages/ProducDetail`
-      )
-  }, "HelloWorld")
+      ),
+      chunkName: "HelloWorld",
+  })
 }
 ```
 
@@ -161,8 +162,9 @@ const name = "SlimShady"
       import(
         /* webpackChunkName: '[request]' */
         `./pages/${name}`
-      )
-  }, name)
+      ),
+    chunkName: name,
+  })
 }
 ```
 
@@ -175,8 +177,9 @@ const name = "SlimShady"
     loader: () =>
       import(
         `./pages/test`
-      )
-  }, "my-custom-chunk-name")
+      ),
+    chunkName: "my-custom-chunk-name",
+  })
 }
 ```
 
@@ -190,8 +193,9 @@ const name = "SlimShady"
       import(
         /* webpackChunkName: 'my-custom-chunk-name' */
         `./pages/test`
-      )
-  }, "my-custom-chunk-name")
+      ),
+      chunkName: "my-custom-chunk-name",
+  })
 }
 ```
 
@@ -205,8 +209,9 @@ const name = "SlimShady"
       import(
         /* webpackChunkName: 'my-custom-chunk-name' */
         `./pages/test`
-      )
-  }, "i-will-replace-magic-comment")
+      ),
+    chunkName: "i-will-replace-magic-comment",
+  })
 }
 ```
 
@@ -220,8 +225,9 @@ const name = "SlimShady"
       import(
         /* webpackChunkName: 'i-will-replace-magic-comment' */
         `./pages/test`
-      )
-  }, "i-will-replace-magic-comment")
+      ),
+    chunkName: "i-will-replace-magic-comment",
+  })
 }
 ```
 
