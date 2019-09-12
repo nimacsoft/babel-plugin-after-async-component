@@ -35,26 +35,46 @@ export default function({ types: t }) {
           })
         }
       },
-      CallExpression(path, { opts }) {
-        if (
-          (asyncComponentImportNames.length >= 1,
-          // check if the function that called is named "asyncComponent" or named export { asyncComponent as foo }
-          t.isIdentifier(path.node.callee) &&
-            asyncComponentImportNames.includes(path.node.callee.name) &&
-            // check if function is property of an object
-            t.isObjectProperty(path.parentPath) &&
-            // check if key of property is "component"
-            t.isIdentifier(path.parentPath.node.key, { name: "component" }))
-        ) {
-          path.traverse(importVisitor, {
-            parentPath: path.parentPath,
-            prefix: opts.prefix,
-            t,
-          })
-        }
+      ObjectExpression(path, { opts }) {
+        // if there was no import statement just return
+        if (asyncComponentImportNames.length === 0) return
+
+        // check for "component" in object properties and function call in value { component: hello() }
+        const component = path.node.properties.find(
+          (property) =>
+            t.isIdentifier(property.key, { name: "component" }) &&
+            t.isCallExpression(property.value)
+        )
+
+        // if there was not propery to match conditions just return
+        if (!component) return
+
+        path.traverse(callVisitor, {
+          parentPath: path,
+          prefix: opts.prefix,
+          t,
+        })
       },
     },
   }
+}
+
+const callVisitor = {
+  CallExpression(path) {
+    const t = this.t
+
+    // check if the function that get called is named "asyncComponent" or named export { asyncComponent as foo }
+    if (
+      t.isIdentifier(path.node.callee) &&
+      asyncComponentImportNames.includes(path.node.callee.name)
+    ) {
+      path.traverse(importVisitor, {
+        parentPath: path,
+        prefix: this.prefix,
+        t,
+      })
+    }
+  },
 }
 
 const importVisitor = {
@@ -62,25 +82,29 @@ const importVisitor = {
     const argPath = getImportArgPath(path)
     const { node } = argPath
     const generatedChunkName = getMagicCommentChunkName(node)
-    if (generatedChunkName === "[request]") {
-      return
-    }
+
+    const existingChunkNameFromParams =
+      (this.parentPath.node.arguments[1] &&
+        this.parentPath.node.arguments[1].value) ||
+      null
 
     const existingChunkName = existingMagicCommentChunkName(node)
-    const chunkName =
-      existingChunkName || convertChunkName(generatedChunkName, this.prefix)
+    const chunkName = convertChunkName(
+      existingChunkNameFromParams || existingChunkName || generatedChunkName,
+      this.prefix
+    )
 
     addChunkNameToNode(argPath, chunkName)
 
-    this.parentPath.insertBefore(
-      this.t.objectProperty(
-        this.t.stringLiteral("chunkName"),
-        this.t.stringLiteral(chunkName)
-      )
-    )
+    this.parentPath.node.arguments[1] = this.t.stringLiteral(chunkName)
+    this.parentPath.node.arguments[1] =
+      generatedChunkName === "[request]"
+        ? this.t.identifier(node.expressions[0].name)
+        : this.t.stringLiteral(chunkName)
   },
 }
 
 function convertChunkName(chunkName, prefix = "") {
+  if (chunkName === "[request]") return chunkName
   return prefix + chunkName.replace("/", "-")
 }

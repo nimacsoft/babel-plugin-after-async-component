@@ -35,10 +35,11 @@ import { asyncComponent, After } from "@jaredpalmer/after" // localname is async
 // localname = [`loader`, `asyncComponent`] :)
 ```
 
-2. then it searches for FunctionCalls that have these conditions: 
-  1) name of function that get called matches localname array 
-  2) that function act as value of property 
-  3) the name of property must be `component`
+2. then it searches for FunctionCalls that have these conditions:
+
+1) name of function that get called matches localname array
+2) that function act as value of property
+3) the name of property must be `component`
 
 ```javascript
 import { asyncComponent } from '@jaredpalmer/after'; // localname is asyncComponent
@@ -89,14 +90,13 @@ import { asyncComponent } from '@jaredpalmer/after'; // localname is asyncCompon
 ```js
 {
   path: "/product/:name",
-  chunkName: "pages-ProducDetail",
   component: asyncComponent({
     loader: () =>
       import(
         /* webpackChunkName: 'pages-ProducDetail' */
         `./pages/ProducDetail`
       )
-  })
+  }, "pages-ProducDetail")
 }
 
 // 👆 as you can see `./pages/ProducDetail` changed to `pages-ProducDetail`,
@@ -125,14 +125,13 @@ import { asyncComponent } from '@jaredpalmer/after'; // localname is asyncCompon
 ```js
 {
   path: "/product/:name",
-  chunkName: "HelloWorld",
   component: asyncComponent({
     loader: () =>
       import(
         /* webpackChunkName: 'HelloWorld' */
         `./pages/ProducDetail`
       )
-  })
+  }, "HelloWorld")
 }
 ```
 
@@ -160,48 +159,69 @@ const name = "SlimShady"
   component: asyncComponent({
     loader: () =>
       import(
+        /* webpackChunkName: '[request]' */
         `./pages/${name}`
       )
-  })
+  }, name)
 }
 ```
 
-👆 did you notice that it's not working with the above example ?
-in this kind of situation you have to name that chunk your self
+**In**
 
-### HOW ?
-
-add `chunkName` property and a magic comment
-
-From:
-
-```javascript
-const name = "SlimShady"
+```js
 {
-  path: "/rap/god",
+  path: "/test",
   component: asyncComponent({
     loader: () =>
       import(
-        `./pages/${name}`
+        `./pages/test`
       )
-  })
+  }, "my-custom-chunk-name")
 }
 ```
 
-To:
+**Out**
 
-```javascript
-const name = "SlimShady"
+```js
 {
-  path: "/rap/god",
-  chunkName: name, // <-
+  path: "/test",
   component: asyncComponent({
     loader: () =>
       import(
-        /* webpackChunkName: "[request]" */ // <-
-        `./pages/${name}`
+        /* webpackChunkName: 'my-custom-chunk-name' */
+        `./pages/test`
       )
-  })
+  }, "my-custom-chunk-name")
+}
+```
+
+**In**
+
+```js
+{
+  path: "/test",
+  component: asyncComponent({
+    loader: () =>
+      import(
+        /* webpackChunkName: 'my-custom-chunk-name' */
+        `./pages/test`
+      )
+  }, "i-will-replace-magic-comment")
+}
+```
+
+**Out**
+
+```js
+{
+  path: "/test",
+  component: asyncComponent({
+    loader: () =>
+      import(
+        /* webpackChunkName: 'i-will-replace-magic-comment' */
+        `./pages/test`
+      )
+  }, "i-will-replace-magic-comment")
 }
 ```
 
