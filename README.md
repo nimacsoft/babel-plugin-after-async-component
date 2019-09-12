@@ -96,7 +96,8 @@ import { asyncComponent } from '@jaredpalmer/after'; // localname is asyncCompon
         /* webpackChunkName: 'pages-ProducDetail' */
         `./pages/ProducDetail`
       )
-  }, "pages-ProducDetail")
+    chunkName: "pages-ProducDetail",
+  })
 }
 
 // 👆 as you can see `./pages/ProducDetail` changed to `pages-ProducDetail`,
