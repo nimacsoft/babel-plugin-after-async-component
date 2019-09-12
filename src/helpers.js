@@ -78,3 +78,10 @@ export function addChunkNameToNode(argPath, chunkName) {
     argPath.addComment("leading", validLeadingComment.value)
   )
 }
+
+export function getAsyncComponentParamter(loaderArguments, name, t) {
+  const index = loaderArguments.findIndex((property) =>
+    t.isIdentifier(property.node.key, { name })
+  )
+  return [index, index === -1 ? null : loaderArguments[index].node.value.value]
+}

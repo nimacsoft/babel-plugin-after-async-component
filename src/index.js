@@ -4,6 +4,7 @@ import {
   getMagicCommentChunkName,
   getImportArgPath,
   addChunkNameToNode,
+  getAsyncComponentParamter,
 } from "./helpers"
 
 let asyncComponentImportNames = []
@@ -79,16 +80,21 @@ const callVisitor = {
 
 const importVisitor = {
   Import(path) {
+    const t = this.t
     const argPath = getImportArgPath(path)
     const { node } = argPath
     const generatedChunkName = getMagicCommentChunkName(node)
-
-    const existingChunkNameFromParams =
-      (this.parentPath.node.arguments[1] &&
-        this.parentPath.node.arguments[1].value) ||
-      null
-
     const existingChunkName = existingMagicCommentChunkName(node)
+
+    const loaderArguments = this.parentPath
+      .get("arguments")[0]
+      .get("properties")
+
+    const [
+      chunkNameNodeIndex,
+      existingChunkNameFromParams,
+    ] = getAsyncComponentParamter(loaderArguments, "chunkName", t)
+
     const chunkName = convertChunkName(
       existingChunkNameFromParams || existingChunkName || generatedChunkName,
       this.prefix
@@ -96,15 +102,22 @@ const importVisitor = {
 
     addChunkNameToNode(argPath, chunkName)
 
-    this.parentPath.node.arguments[1] = this.t.stringLiteral(chunkName)
-    this.parentPath.node.arguments[1] =
-      generatedChunkName === "[request]"
-        ? this.t.identifier(node.expressions[0].name)
-        : this.t.stringLiteral(chunkName)
+    const objectToAppend = t.objectProperty(
+      t.identifier("chunkName"),
+      generatedChunkName === "[request]" // if it was a dynamic route! import("./pages/${foo}")
+        ? t.identifier(node.expressions[0].name) // add variable name as chunkName. chunkName: foo
+        : t.stringLiteral(chunkName) // if it was static just add import() parameter
+    )
+
+    if (chunkNameNodeIndex !== -1) {
+      loaderArguments[chunkNameNodeIndex].replaceWith(objectToAppend)
+    } else {
+      loaderArguments[0].insertAfter(objectToAppend)
+    }
   },
 }
 
 function convertChunkName(chunkName, prefix = "") {
-  if (chunkName === "[request]") return chunkName
+  if (chunkName === "[request]") return chunkName // we can't change request it's handled by webpack
   return prefix + chunkName.replace("/", "-")
 }
