@@ -1,3 +1,7 @@
+# Note
+
+This package is moved to after.js repo: https://github.com/jaredpalmer/after.js/tree/v3.0.0/packages/babel-plugin-after
+
 [![npm version](https://badge.fury.io/js/babel-plugin-after-async-component.svg)](https://badge.fury.io/js/babel-plugin-after-async-component)
 
 # babel-plugin-after-async-component
